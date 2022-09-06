@@ -10,6 +10,7 @@ import scipy as sc
 import sympy as sp
 import copy
 from statsmodels.tsa.seasonal import seasonal_decompose
+import pytz
 
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
@@ -23,9 +24,15 @@ import threading
 from threading import Thread
 import time as t
 
+#import alpaca_trade_api as tradeapi
+from alpaca.trading.client import TradingClient
+from alpaca.trading.requests import GetAssetsRequest
+from alpaca.trading.enums import AssetClass
+from alpaca.trading.requests import MarketOrderRequest
+from alpaca.trading.enums import OrderSide, TimeInForce
 
 class SVC_investor(object):
-    def __init__(self,trade_freq,model_description_dir,estimation_results_directory,market_availability):
+    def __init__(self,trade_freq,model_description_dir,estimation_results_directory,market_availability,API_KEY, secret_KEY):
         """
         trade_freq: timedelta object
         market_availability: List of [open_time close_time]
@@ -45,9 +52,11 @@ class SVC_investor(object):
                 "Y_est":None,
                 "Time":[market_availability[0]]
             }
+        self.TraderC=TradingClient(API_KEY, secret_KEY,paper=True)
+        self.active_market_orders=None
         
         
-    def predict_act(self):
+    def predict(self):
         Y_est,tst=predict_RT(
                 **(self.model_params)
             )
@@ -59,6 +68,55 @@ class SVC_investor(object):
         print(tst)
         
         # MAKE OPERATION
+
+        self.save_act_results()
+
+    def basic_strategy(self,model_out,operation_value):
+        print(self.active_market_orders)
+        if self.active_market_orders!=None:
+            print("Selling")
+            #self.TraderC.cancel_order_by_id(self.active_market_orders["order"].id)
+
+            sell_market_order_data = MarketOrderRequest(
+                    symbol=self.active_market_orders["order"].symbol,
+                    notional=self.active_market_orders["order"].notional,
+                    side=OrderSide.SELL,
+                    time_in_force=TimeInForce.DAY
+                    )
+
+            sell_market_order = self.TraderC.submit_order(
+                order_data=sell_market_order_data
+               )
+
+        if model_out:
+            market_order_data = MarketOrderRequest(
+                    symbol=self.model_description["Ticker"],
+                    notional=operation_value,
+                    side=OrderSide.BUY,
+                    time_in_force=TimeInForce.DAY
+                    )
+            market_order = self.TraderC.submit_order(
+                order_data=market_order_data
+               )
+            self.active_market_orders={
+                "Ticker":self.model_description["Ticker"],
+                "order":market_order
+            }
+
+    def predict_act(self):
+        Y_est,tst=predict_RT(
+                **(self.model_params)
+            )
+        self.estimation={
+                "Y_est":Y_est,
+                "Time":tst
+            }
+
+        print(Y_est)
+        print(tst)
+        
+        # MAKE OPERATION
+        self.basic_strategy(Y_est[0],100)
 
         self.save_act_results()
     
@@ -92,26 +150,44 @@ class SVC_investor(object):
                 print(self.operations_threads)
             print("keep checking")
 
+    def request_new_information(self):
+        Tlist=get_tickers(page=3,vectorized=True,options=self.model_params["options"])
+        Tlist=np.unique(np.array(Tlist)).tolist()
+        data = yf.download(Tlist[:], interval = self.model_params["interval"],period = "3h")
+        data=data.dropna()
+        self.last_available_data_time=data[self.model_params["feature"]].tail(1).index[0].astimezone(pytz.timezone("America/Lima")).time()
+
+        #return data[self.model_params["feature"]].tail().index[0]
+
     def run_invest(self):
         self.operations_threads=[]
         dt2 = datetime.now().replace(microsecond=0)
         last_operation_time=self.estimation["Time"][0]
         while (dt2.time()>self.market_open and dt2.time()<self.market_close):
             
-            t.sleep(self.trade_freq.seconds/4)
-            dt2=datetime.now().replace(microsecond=0)
-            print(dt2)
             
-            if (datetime.combine(datetime.today(),last_operation_time)-dt2)>=self.trade_freq:
+            dt2=datetime.now().replace(microsecond=0)
+            operation=Thread(self.request_new_information())
+            operation.start()
+
+            print(dt2)
+            print(self.last_available_data_time)
+            print(last_operation_time)
+            print(self.trade_freq)
+            
+            
+            #if (dt2-datetime.combine(datetime.today(),last_operation_time))>=self.trade_freq:
+            if self.last_available_data_time!=last_operation_time:
                 print("making operation")
             
                 operation=Thread(self.predict_act())
                 operation.start()
                 
-                last_operation_time=self.estimation["Time"][0].time()
+                last_operation_time=(self.estimation["Time"][0].astimezone(pytz.timezone("America/Lima"))).time()
                 
                 self.operations_threads.append(operation)
             print("keep checking")
+            t.sleep(self.trade_freq.seconds/30)
             
         # MAKE INFORM AND RUN REVALIDATION PROTOCOL
 

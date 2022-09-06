@@ -1,0 +1,72 @@
+1662251394249	geckodriver	INFO	Listening on 127.0.0.1:51784
+1662251397326	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\grmc1\\AppData\\Local\\Temp\\rust_mozprofileR7KFLZ"
+1662251398035	Marionette	INFO	Marionette enabled
+1662251398044	Marionette	INFO	Listening on port 51796
+Read port: 51796
+1662251398709	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\grmc1\\AppData\\Local\\Temp\\rust_mozprofileR7KFLZ\\search.json.mozlz4", (void 0)))
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4114: Error: Area not yet restored
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+JavaScript warning: https://zero.pointlessplay.com/i/3c2d8da22b7aa416fab4696fbd547cc9.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://tr.snapchat.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+JavaScript warning: https://accounts.google.com/o/oauth2/auth?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fwww.etoro.com%3Fid%3Dauth774178&response_type=code%20permission%20id_token&scope=profile%20email%20openid&openid.realm=&include_granted_scopes=true&client_id=1070319902608-plmm2pme29to6s18v4emc53r0h5aknkc.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fwww.etoro.com&access_type=offline&prompt=consent&origin=https%3A%2F%2Fwww.etoro.com&gsiwebsdk=2 line 2 > eval line 3742 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+JavaScript warning: https://accounts.google.com/o/oauth2/auth?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fwww.etoro.com%3Fid%3Dauth774178&response_type=code%20permission%20id_token&scope=profile%20email%20openid&openid.realm=&include_granted_scopes=true&client_id=1070319902608-plmm2pme29to6s18v4emc53r0h5aknkc.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fwww.etoro.com&access_type=offline&prompt=consent&origin=https%3A%2F%2Fwww.etoro.com&gsiwebsdk=2 line 2 > eval line 394 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+JavaScript warning: https://accounts.google.com/o/oauth2/auth?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fwww.etoro.com%3Fid%3Dauth184875&response_type=code%20permission%20id_token&scope=profile%20email%20openid&openid.realm=&include_granted_scopes=true&client_id=1070319902608-plmm2pme29to6s18v4emc53r0h5aknkc.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fwww.etoro.com&access_type=offline&prompt=consent&origin=https%3A%2F%2Fwww.etoro.com&gsiwebsdk=2 line 2 > eval line 1929 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+JavaScript warning: https://accounts.google.com/o/oauth2/auth?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fwww.etoro.com%3Fid%3Dauth184875&response_type=code%20permission%20id_token&scope=profile%20email%20openid&openid.realm=&include_granted_scopes=true&client_id=1070319902608-plmm2pme29to6s18v4emc53r0h5aknkc.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fwww.etoro.com&access_type=offline&prompt=consent&origin=https%3A%2F%2Fwww.etoro.com&gsiwebsdk=2 line 2 > eval line 4628 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://accounts.google.com"
+JavaScript warning: https://accounts.google.com/o/oauth2/auth?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fwww.etoro.com%3Fid%3Dauth184875&response_type=code+permission+id_token&scope=profile+email+openid&openid.realm&include_granted_scopes=true&client_id=1070319902608-plmm2pme29to6s18v4emc53r0h5aknkc.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fwww.etoro.com&access_type=offline&prompt=consent&origin=https%3A%2F%2Fwww.etoro.com&gsiwebsdk=2&flowName=GeneralOAuthFlow line 2 > eval line 3456 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4856: TypeError: aWindow.gNavToolbox.palette is undefined
+1662251738416	Marionette	INFO	Stopped listening on port 51796
+[Parent 20424, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: chrome://remote/content/marionette/cert.js, line 57: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+1662251743521	geckodriver	INFO	Listening on 127.0.0.1:52237
+1662251746598	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\grmc1\\AppData\\Local\\Temp\\rust_mozprofile1a6sy4"
+1662251747022	Marionette	INFO	Marionette enabled
+1662251747028	Marionette	INFO	Listening on port 52249
+Read port: 52249
+1662251747370	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\grmc1\\AppData\\Local\\Temp\\rust_mozprofile1a6sy4\\search.json.mozlz4", (void 0)))
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4114: Error: Area not yet restored
+JavaScript warning: https://zero.pointlessplay.com/i/3c2d8da22b7aa416fab4696fbd547cc9.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://tr.snapchat.com"
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4114: Error: Area not yet restored
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4114: Error: Area not yet restored
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4856: TypeError: aWindow.gNavToolbox.palette is undefined
+1662252137198	Marionette	INFO	Stopped listening on port 52249
+[Parent 12344, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: chrome://remote/content/marionette/cert.js, line 57: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+1662252139666	geckodriver	INFO	Listening on 127.0.0.1:52409
+1662252142700	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\grmc1\\AppData\\Local\\Temp\\rust_mozprofileRe7JPj"
+1662252143131	Marionette	INFO	Marionette enabled
+1662252143138	Marionette	INFO	Listening on port 52421
+Read port: 52421
+1662252143553	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: chrome://browser/content/tabbrowser.js, line 5319: TypeError: this.PictureInPicture is undefined
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\grmc1\\AppData\\Local\\Temp\\rust_mozprofileRe7JPj\\search.json.mozlz4", (void 0)))
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4114: Error: Area not yet restored
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.etoro.com"
+JavaScript warning: https://zero.pointlessplay.com/i/3c2d8da22b7aa416fab4696fbd547cc9.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://tr.snapchat.com"
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4114: Error: Area not yet restored
+JavaScript error: resource:///modules/CustomizableUI.jsm, line 4856: TypeError: aWindow.gNavToolbox.palette is undefined
+1662252163326	Marionette	INFO	Stopped listening on port 52421
+JavaScript error: chrome://remote/content/marionette/cert.js, line 57: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]

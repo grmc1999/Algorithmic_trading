@@ -54,13 +54,12 @@ def past_data_prep(data,window=3,sample_data="Open",target_ticker="CTVA",portcen
     [(selec.append(k) if "_X_" in k else None) for k in pr]
     #XY split
     X_last=clda.iloc[-1]
-    print(X_last) #DEBUG
     XY=clda.loc[:,selec].dropna()
     selec=[]
     [(selec.append(k) if "_X_" in k else None) for k in pr]
     Y=XY.loc[:,target_ticker+"_y"]
     X=XY.loc[:,selec]
-    return X,Y,X_last
+    return X,Y,X_last[:-1]
 
 def predict_RT(model_state="../Results/SVC_DAYS/SVC_CF.joblib",options=[Screener.SectorOption.BASIC_MATERIALS,Screener.IndexOption.SANDP_500],
     interval="1h",feature="Open",window=3,period="2w"):

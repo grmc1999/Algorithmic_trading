@@ -53,7 +53,7 @@ def past_data_prep(data,window=3,sample_data="Open",target_ticker="CTVA",portcen
     selec=[target_ticker+"_y"]
     [(selec.append(k) if "_X_" in k else None) for k in pr]
     #XY split
-    X_last=clda.loc[-1]
+    X_last=clda.iloc[-1]
     print(X_last) #DEBUG
     XY=clda.loc[:,selec].dropna()
     selec=[]

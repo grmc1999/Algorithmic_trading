@@ -6,6 +6,7 @@ import pandas as pd
 from Utils import get_tickers
 from window_time_utils import *
 #import get_tickers
+from itertools import product
 import scipy as sc
 import sympy as sp
 import copy
@@ -72,23 +73,20 @@ class SVC_investor(object):
         self.save_act_results()
 
     def basic_strategy(self,model_out,operation_value):
-        print(self.active_market_orders)
+        #print(self.active_market_orders)
         if self.active_market_orders!=None:
             print("Selling")
-            #self.TraderC.cancel_order_by_id(self.active_market_orders["order"].id)
+            
+            #TRY CATCH
+            try:
+                self.TraderC.close_position(self.active_market_orders["order"].symbol)
+            except:
+                print("No positions in: "+self.active_market_orders["order"].symbol)
 
-            sell_market_order_data = MarketOrderRequest(
-                    symbol=self.active_market_orders["order"].symbol,
-                    notional=self.active_market_orders["order"].notional,
-                    side=OrderSide.SELL,
-                    time_in_force=TimeInForce.DAY
-                    )
-
-            sell_market_order = self.TraderC.submit_order(
-                order_data=sell_market_order_data
-               )
+            print("selled")
 
         if model_out:
+            print("ordering")
             market_order_data = MarketOrderRequest(
                     symbol=self.model_description["Ticker"],
                     notional=operation_value,
@@ -102,6 +100,7 @@ class SVC_investor(object):
                 "Ticker":self.model_description["Ticker"],
                 "order":market_order
             }
+            print("order done")
 
     def predict_act(self):
         Y_est,tst=predict_RT(
@@ -151,13 +150,86 @@ class SVC_investor(object):
             print("keep checking")
 
     def request_new_information(self):
-        Tlist=get_tickers(page=3,vectorized=True,options=self.model_params["options"])
+        Tlist=get_tickers(page=3,vectorized=False,options=self.model_params["options"])
         Tlist=np.unique(np.array(Tlist)).tolist()
         data = yf.download(Tlist[:], interval = self.model_params["interval"],period = "3h")
         data=data.dropna()
-        self.last_available_data_time=data[self.model_params["feature"]].tail(1).index[0].astimezone(pytz.timezone("America/Lima")).time()
+        try:
+            self.last_available_data_time=data[self.model_params["feature"]].tail(1).index[0].astimezone(pytz.timezone("America/Lima")).time()
+        except:
+            print("No data")
+            pass
 
         #return data[self.model_params["feature"]].tail().index[0]
+    
+    def currrent_performmance(self,clf,X_test,Y_test,data):
+        te_sc=clf.score(X_test,Y_test)
+        
+        self.model_validation={
+            "score":te_sc,
+            "timespam":[data.index[0],data.index[-1]]
+        }
+
+        np.save(
+            os.path.join(self.estimation_results_directory,"Pre_training","VALIDATION_"+self.estimation["Time"][0].strftime("%m_%d_%Y")),
+            self.model_validation
+        )
+
+        print("validation score test %(ts)4f"%{
+                    "ts":te_sc
+                    })
+
+
+
+    def new_model_search(self,data):
+        C_list=list(np.arange(0.01,25.0,0.005))
+        window_list=list(np.arange(2,15))
+
+        tunning=list(product(*[C_list,window_list]))
+        test_list=[]
+        train_list=[]
+        for c,W in tunning:
+            X,Y=past_data_prep(data,W,target_ticker=self.model_description["Ticker"])
+            X_train, X_test, Y_train, Y_test = train_test_split(X, Y>0, test_size=0.33,shuffle=False)
+            clf=make_pipeline(StandardScaler(),SVC(kernel="linear",C=c))
+            clf.fit(X_train,Y_train)
+            tr_sc=clf.score(X_train,Y_train)
+            te_sc=clf.score(X_test,Y_test)
+            print(c)
+            print(W)
+            print(tr_sc)
+            print(te_sc)
+            test_list.append(tr_sc)
+            train_list.append(te_sc)
+
+        print(max(test_list))
+        print(max(train_list))
+
+        return test_list,train_list
+
+        #Print and Overwrite the best
+
+    def retrain_performance(self,clf,X_train,Y_train,X_test,Y_test,data):
+
+        clf.fit(X_train,Y_train)
+        tr_sc=clf.score(X_train,Y_train)
+        te_sc=clf.score(X_test,Y_test)
+
+        self.model_validation={
+            "train_score":tr_sc,
+            "test_score":te_sc,
+            "timespam":[data.index[0],data.index[-1]]
+        }
+
+        print("train %(tr)4f test %(ts)4f   "%{
+                    "tr":tr_sc,
+                    "ts":te_sc})
+
+        np.save(
+            os.path.join(self.estimation_results_directory,"Trained","VALIDATION_"+self.estimation["Time"][0].strftime("%m_%d_%Y")),
+            self.model_validation
+        )
+
 
     def run_invest(self):
         self.operations_threads=[]
@@ -191,7 +263,7 @@ class SVC_investor(object):
             
         # MAKE INFORM AND RUN REVALIDATION PROTOCOL
 
-        Tlist=get_tickers(page=3,vectorized=True,options=self.model_params["options"])
+        Tlist=get_tickers(page=3,vectorized=False,options=self.model_params["options"])
         Tlist=np.unique(np.array(Tlist)).tolist()
         data = yf.download(Tlist[:], interval = self.model_params["interval"],period = self.model_description["Validation_period"])
 
@@ -199,19 +271,12 @@ class SVC_investor(object):
 
 
         X,Y=past_data_prep(data,window=self.model_params["window"],target_ticker=self.model_description["Ticker"])
-        _, X_test, _, Y_test = train_test_split(X, Y>0, test_size=0.33,shuffle=False)
-        te_sc=clf.score(X_test,Y_test)
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y>0, test_size=0.33,shuffle=False)
+
+        self.currrent_performmance(clf,X_test,Y_test,data)
+        self.retrain_performance(clf,X_train,Y_train,X_test,Y_test,data)
+        self.new_model_search()
+
+
+
         
-        self.model_validation={
-            "score":te_sc,
-            "timespam":[data.index[0],data.index[-1]]
-        }
-
-        np.save(
-            os.path.join(self.estimation_results_directory,"VALIDATION_"+self.estimation["Time"][0].strftime("%m_%d_%Y")[0]),
-            self.model_validation
-        )
-
-        print("validation score test %(ts)4f"%{
-                    "ts":te_sc
-                    })

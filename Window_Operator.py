@@ -15,9 +15,9 @@ def main():
         trade_freq=timedelta(minutes=60),
         model_description_dir="../Results/SVC_HOURS/Meta_SVC.npy",
         estimation_results_directory="../Results/SVC_HOURS/Running_results",
-        market_availability=[time(hour=8,minute=35,second=0),time(hour=14,minute=45,second=0)],
-        API_KEY="PKRMQ77B325NJDDG614A",
-        secret_KEY="zhQt9G6UBZ97VmedbQaBfpDxnSGAETJR9EVyCEmT"
+        market_availability=[time(hour=8,minute=15,second=0),time(hour=23,minute=40,second=0)],
+        API_KEY="PKE3DH2LZD3W75TOI95M",
+        secret_KEY="iWdYAw2IX9VfB7fJvB2djlDHHNY8sUMtTHxtW3lk"
     )
 
     inv.run_invest()

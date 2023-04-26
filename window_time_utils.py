@@ -60,18 +60,21 @@ def past_data_prep(data,window=3,sample_data="Open",target_ticker="CTVA",portcen
     X=XY.loc[:,selec]
     return X,Y
 
-def predict_RT(model_state="../Results/SVC_HOURS/SVC_MOS.joblib",options=[Screener.SectorOption.BASIC_MATERIALS,Screener.IndexOption.SANDP_500],
-    interval="1h",feature="Open",window=3,period="2d"):
+def predict_RT(model_state="../Results/SVC_DAYS/SVC_CF.joblib",options=[Screener.SectorOption.BASIC_MATERIALS,Screener.IndexOption.SANDP_500],
+    interval="1h",feature="Open",window=3,period="2w"):
               
     clf = load(model_state) 
 
 
     #Retrieve last data available for model
-    Tlist=get_tickers(page=3,vectorized=True,options=[Screener.SectorOption.BASIC_MATERIALS,Screener.IndexOption.SANDP_500])
+    Tlist=get_tickers(page=3,vectorized=False,options=[Screener.SectorOption.BASIC_MATERIALS,Screener.IndexOption.SANDP_500])
     Tlist=np.unique(np.array(Tlist)).tolist()
+    print(Tlist)
     cdata = yf.download(Tlist[:], period = period,interval =interval)
 
+    print(cdata)
     cc=cdata[feature].dropna().tail(window)
+    print(cc)
     pr=cc.columns.values.tolist()
     for t in pr:
         window_expand_data(cc,t,window)
@@ -80,6 +83,7 @@ def predict_RT(model_state="../Results/SVC_HOURS/SVC_MOS.joblib",options=[Screen
 
     #data preparation
     pr=cc.columns.values.tolist()
+    print(pr)
     selec=[]
     [(selec.append(k) if "_X_" in k else None) for k in pr]
     #XY split

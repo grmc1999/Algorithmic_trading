@@ -61,7 +61,7 @@ def past_data_prep(data,window=3,sample_data="Open",target_ticker="CTVA",portcen
     X=XY.loc[:,selec]
     return X,Y,X_last[:-1]
 
-def predict_RT(model_state="../Results/SVC_DAYS/SVC_CF.joblib",options=[Screener.SectorOption.BASIC_MATERIALS,Screener.IndexOption.SANDP_500],
+def predict_RT(model_state,options,
     interval="1h",feature="Open",window=3,period="2w"):
               
     clf = load(model_state) 

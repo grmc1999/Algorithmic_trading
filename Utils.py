@@ -13,9 +13,9 @@ def get_tickers(page=10,vectorized=True,options=None):
         list_ticker=list(a.reshape(-1))
     else:
         list_ticker=[]
-        for i in range(0, page):
+        for i in range(1, page):
             if i == 1:
-                pass
+                list_ticker=list(screener.data_frames[i].Ticker.values)
             else:
                 list_ticker=list_ticker+list(screener.data_frames[i].Ticker.values)
     return list_ticker

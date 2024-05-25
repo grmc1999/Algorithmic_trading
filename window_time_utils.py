@@ -31,10 +31,13 @@ def window_expand_data(dataframe,key,window):
         window)
     return dataframe
 
-def growth_trans(Y,portcentual_growth=0):
-    dY=Y[1:]-Y[:-1]
-    pdY=((dY/Y[:-1])>portcentual_growth)
-    return np.hstack((pdY,np.nan))
+def growth_trans(Y,portcentual_growth=0,steps=1):
+    dY=Y[steps:]-Y[:-steps]
+    if portcentual_growth!=None:
+      pdY=((dY/Y[:-steps])>portcentual_growth)
+    else:
+      pdY=((dY/Y[:-steps]))
+    return np.hstack((pdY,)+steps*(np.nan,))
 
 def past_data_prep(data,window=3,sample_data="Open",target_ticker="CTVA",portcentual_growth=0):
     clda=data.loc[:,sample_data].loc[:,:].dropna()
